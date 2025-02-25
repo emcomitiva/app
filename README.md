@@ -1,2 +1,1 @@
-# app
-Causal Inference Analysis of Point of Gaze (POG) and EEG Measures Influencing Self-Efficacy with Advanced Statistical Techniques
+This repository examines the causal relationships between Point of Gaze (POG), EEG-derived measures, and self-efficacy using advanced statistical techniques like FCI and Double Machine Learning. Large language models (LLMs) enrich text analysis, while SHAP provides insights into feature influences.
