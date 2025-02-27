@@ -1,84 +1,93 @@
-Este notebook investiga como a padronização da linguagem markdown afeta a carga cognitiva e o desempenho em tarefas quando utilizando diferentes modelos generativos. Utilizando dados sintéticos, o notebook simula um cenário onde desenvolvedores empregam diferentes LLMs (Large Language Models) com e sem markdown padronizado em suas rotinas diárias.
+Este notebook implementa um framework avançado para análise de intervenções em ansiedade, incorporando algoritmos de descoberta causal, especificamente o FCI (Fast Causal Inference) da biblioteca causallearn. O objetivo principal é identificar relacionamentos causais entre estratégias de intervenção, níveis de ansiedade pré-intervenção e resultados pós-intervenção, fornecendo assim uma compreensão mais profunda da eficácia das intervenções.
 
-## Fluxo de Trabalho
+## Funcionalidades Principais
 
-O notebook segue uma metodologia estruturada dividida em cinco etapas principais:
+O notebook implementa um fluxo de trabalho completo que inclui:
 
-1. **Carregamento e Validação de Dados**: Carrega dados sintéticos e valida sua estrutura para garantir integridade.
-2. **Pré-processamento de Dados**: Aplica escalonamento MinMax nas características numéricas.
-3. **Visualização de Dados**: Gera gráficos KDE e Violin para comparar distribuições.
-4. **Análise Estatística**: Realiza análise bootstrap para calcular intervalos de confiança.
-5. **Relatório de Insights de LLM**: Sintetiza descobertas utilizando LLMs simulados (Grok, Claude, Grok-Enhanced).
+1. **Carregamento e Validação de Dados**: Carrega dados sintéticos de intervenção em ansiedade, validando sua estrutura, conteúdo e tipos de dados, tratando possíveis erros.
 
-## Recursos Técnicos
+2. **Pré-processamento de Dados**: Realiza codificação one-hot da coluna de grupos e escala características numéricas para análise.
 
-O notebook implementa diversas técnicas avançadas:
+3. **Descoberta de Estrutura Causal**: Aplica o algoritmo FCI da biblioteca causallearn para inferir o grafo causal, gerando visualizações das relações causais.
 
-- **Processamento de Dados**: Utiliza pandas para manipulação e validação de estruturas de dados.
-- **Visualização Estatística**: Emprega seaborn para gráficos KDE e Violin plots com estilo personalizado.
-- **Análise Estatística Robusta**: Implementa métodos bootstrap para estimar intervalos de confiança.
-- **Simulação de Agente DDQN**: Inclui uma classe de agente Double Deep Q-Network simplificada para demonstração.
-- **Integração de Múltiplos LLMs**: Simula a análise de dados por diferentes modelos generativos.
+4. **Análise de Valores SHAP**: Quantifica a importância das características na previsão da ansiedade pós-intervenção, fornecendo insights sobre os fatores mais influentes.
 
-## Estrutura do Código
+5. **Visualização de Dados**: Gera diversos gráficos para análise:
+   - Gráficos KDE para distribuições de ansiedade
+   - Gráficos de violino para comparação entre grupos
+   - Gráficos de coordenadas paralelas para visualizar mudanças pré/pós-intervenção
+   - Hipergrafos para representar padrões de ansiedade entre participantes
 
-O notebook está organizado nas seguintes seções:
+6. **Resumo Estatístico**: Realiza análise bootstrap e gera estatísticas resumidas para quantificar a eficácia da intervenção.
 
-- **Importações e Configurações**: Configura bibliotecas e parâmetros globais.
-- **Implementação do Agente DDQN**: Define uma classe simplificada para demonstração.
-- **Funções Auxiliares**: Contém utilidades para:
-  - Validação e carregamento de dados
-  - Criação de visualizações
-  - Análise estatística
-  - Integração com LLMs simulados
-- **Script Principal**: Executa o fluxo de trabalho completo e gera relatórios.
-
-## Conjuntos de Dados
-
-O notebook utiliza um conjunto de dados sintéticos que contém:
-
-- IDs de desenvolvedor
-- Tipos de modelo (Modelo A, Modelo B)
-- Status de padronização de markdown (0/1)
-- Métricas de carga cognitiva (escala de 0-10)
-- Métricas de desempenho de tarefas (escala de 0-100)
-
-## Saídas
-
-O notebook gera as seguintes saídas:
-
-- **Gráficos KDE**: Mostram a distribuição de carga cognitiva e desempenho de tarefas com e sem padronização.
-- **Gráficos Violin**: Visualizam a distribuição de métricas por status de padronização.
-- **Estatísticas Resumidas**: Incluem médias, desvios padrão e intervalos de confiança bootstrap.
-- **Relatório de Insights**: Combina análises simuladas de Grok-base, Claude 3.7 e Grok-Enhanced.
+7. **Relatório de Insights com LLMs**: Sintetiza as descobertas usando diferentes modelos (Grok, Claude e Grok-Enhanced) para explicabilidade, simulando chamadas de API para esses modelos.
 
 ## Requisitos
 
-Para executar este notebook, são necessárias as seguintes bibliotecas:
-
+O notebook requer as seguintes bibliotecas:
+- causal-learn
+- shap
 - pandas
 - matplotlib
 - seaborn
+- networkx
+- plotly
 - numpy
-- scikit-learn
 - scipy
 
-## Como Usar
+## Estrutura do Código
 
-1. Clone este repositório
-2. Instale as dependências necessárias
-3. Execute o notebook completo ou seções individuais
-4. Verifique os resultados na pasta de saída especificada
+O código está organizado em funções modulares para facilitar a manutenção e extensibilidade:
 
-## Conclusões Principais
+- **Funções de Utilidade**: Criação de diretórios, carregamento e validação de dados
+- **Funções de Análise Causal**: Implementação do algoritmo FCI para descoberta causal
+- **Funções de Análise de Valores SHAP**: Cálculo de importância de características
+- **Funções de Visualização**: Criação de diferentes tipos de gráficos
+- **Funções de Análise Estatística**: Bootstrap e geração de resumos estatísticos
+- **Funções de Geração de Insights**: Simulação de análise com LLMs
 
-A análise sugere que a padronização de markdown leva a:
+## Conjunto de Dados
 
-- Redução estatisticamente significativa na carga cognitiva dos desenvolvedores
-- Aumento correspondente no desempenho de tarefas
-- Benefícios consistentes em diferentes modelos generativos
+O notebook utiliza um conjunto de dados sintético de pequena escala incorporado diretamente no código, contendo:
+- IDs de participantes
+- Grupos de intervenção (Grupo A, Grupo B, Controle)
+- Níveis de ansiedade pré-intervenção
+- Níveis de ansiedade pós-intervenção
 
-Estas conclusões indicam que o uso consistente de markdown pode melhorar a eficiência do desenvolvedor e reduzir o esforço mental necessário quando trabalhando com diferentes LLMs.
+## Uso
+
+O notebook foi projetado para funcionar tanto em ambientes Google Colab quanto localmente, com tratamento adequado para cada ambiente. As constantes principais são definidas no início do código, permitindo customização fácil dos parâmetros de análise.
+
+## Aspectos de Segurança
+
+- O código inclui avisos sobre o uso de chaves de API simuladas
+- Supressão de avisos está incluída, mas com comentários sobre os cuidados necessários
+
+## Saídas
+
+O notebook gera diversos arquivos de saída em um diretório designado:
+- Imagem do grafo causal (PNG)
+- Gráfico de resumo SHAP (PNG)
+- Visualizações KDE, de violino, de coordenadas paralelas e hipergrafos (PNG)
+- Arquivo de texto de resumo estatístico
+- Relatório de insights combinando análises de diferentes modelos de LLM
+
+## Contribuições Técnicas Notáveis
+
+1. Integração de descoberta causal com análise de intervenção em ansiedade
+2. Uso de algoritmo FCI para inferência de estrutura causal sob a presença de variáveis latentes
+3. Quantificação de importância de características via SHAP para interpretabilidade
+4. Tratamento robusto de erros em todas as etapas do pipeline
+5. Sistema de síntese multi-modelo para explicabilidade aprimorada
+
+## Extensões Potenciais
+
+Este notebook pode ser estendido para:
+- Incorporar conjuntos de dados maiores e mais complexos
+- Implementar algoritmos adicionais de descoberta causal
+- Integrar mecanismos de explicabilidade mais avançados
+- Adicionar métodos de visualização interativa
+- Incluir métricas adicionais de eficácia de intervenção
 
 ## Autor
 
